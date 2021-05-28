@@ -1,22 +1,22 @@
 CXX = g++
 CXXFLAGS = -Wall
 
-all: build output
+all: build build/output
 
 build:
 	mkdir build
 
-output: main.o transaction.o database.o 
-	${CXX} ${CXXFLAGS} build/main.o build/transaction.o build/database.o -o build/output
+build/output: build/main.o build/transaction.o build/database.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-main.o: src/main.cpp
-	${CXX} ${CXXFLAGS} -c src/main.cpp -o build/main.o
+build/main.o: src/main.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-transaction.o: src/Transaction.cpp src/include/Transaction.h
-	${CXX} ${CXXFLAGS} -c src/Transaction.cpp -o build/Transaction.o
+build/transaction.o: src/Transaction.cpp src/include/Transaction.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-database.o: src/Database.cpp src/include/Database.h
-	${CXX} ${CXXFLAGS} -c src/Database.cpp -o build/Database.o
+build/database.o: src/Database.cpp src/include/Database.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	del build/*.o build/output.exe
