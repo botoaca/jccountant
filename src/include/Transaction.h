@@ -10,7 +10,7 @@ class Transaction {
     int _amount;
 
     public:
-        Transaction(std::string date, std::string type, std::string, int amount);
+        Transaction(std::string, std::string, std::string, int);
         std::string getDate();
         std::string getType();
         std::string getReason();

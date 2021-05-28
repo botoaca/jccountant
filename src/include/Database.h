@@ -8,9 +8,9 @@ class Database {
     std::string _dbPath;
 
     public:
-        Database(std::string dbPath);
-        void addEntry(Transaction t);
-        void removeEntry(int idx);
+        Database(std::string);
+        void addEntry(Transaction);
+        void removeEntry(int);
         void seeEntries();
         void resetDatabase();
 };
