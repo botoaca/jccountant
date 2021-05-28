@@ -13,9 +13,7 @@ int main() {
     std::string date = ctime(&now);
 
     char inputType[8];
-    std::string stringType;
     char inputReason[80];
-    std::string stringReason;
     int inputAmount;
 
     int choice;
@@ -29,14 +27,12 @@ int main() {
             std::cout << "What is the type of this transaction?\n";
             std::cin.ignore(INT_MAX, '\n');
             std::cin.get(inputType, 8);
-            stringType = inputType;
 
             std::cout << "What is the reason for this transaction?\n";
             std::cin.ignore(INT_MAX, '\n');
             std::cin.get(inputReason, 80);
-            stringReason = inputReason;
 
-            Transaction t(date, stringType, stringReason, inputAmount);
+            Transaction t(date, inputType, inputReason, inputAmount);
 
             db.addEntry(t);
             break;

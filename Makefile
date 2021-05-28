@@ -1,3 +1,8 @@
+all: build output
+
+build:
+	mkdir build
+
 output: main.o transaction.o database.o 
 	g++ build/main.o build/transaction.o build/database.o -o build/output
 
