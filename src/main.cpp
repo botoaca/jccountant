@@ -14,7 +14,7 @@ int main() {
 
     char inputType[8];
     char inputReason[80];
-    int inputAmount;
+    int inputAmount = 0;
 
     int choice;
 
@@ -31,6 +31,9 @@ int main() {
             std::cout << "What is the reason for this transaction?\n";
             std::cin.ignore(INT_MAX, '\n');
             std::cin.get(inputReason, 80);
+
+            std::cout << "What is the amount of this transaction?\n";
+            std::cin >> inputAmount;
 
             Transaction t(date, inputType, inputReason, inputAmount);
 
