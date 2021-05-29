@@ -13,12 +13,18 @@ bool dbExists(const char *filename) {
 }
 
 int main() {
-    if (!dbExists("db.json")) {
-        std::ofstream file("db.json");
+    std::string dbName;
+    char* dbPath;
+    std::cout << "What is your database's name?\n(You can input a new name to create a new database.)\n";
+    std::cin >> dbName;
+    dbPath = &(dbName + ".json")[0];
+
+    if (!dbExists(dbPath)) {
+        std::ofstream file(dbPath);
         file << "[]" << std::endl;
     }
 
-    Database db("db.json");
+    Database db(dbPath);
 
     time_t now = time(0);
     std::string date = ctime(&now);
