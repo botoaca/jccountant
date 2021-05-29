@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <ctime>
 #include "nlohmann/json.hpp"
 #include "include/Transaction.h"
@@ -6,7 +7,17 @@
 
 using json = nlohmann::json;
 
+bool dbExists(const char *filename) {
+    std::ifstream input(filename);
+    return input.good();
+}
+
 int main() {
+    if (!dbExists("db.json")) {
+        std::ofstream file("db.json");
+        file << "[]" << std::endl;
+    }
+
     Database db("db.json");
 
     time_t now = time(0);
