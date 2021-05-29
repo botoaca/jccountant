@@ -21,7 +21,7 @@ int main() {
 
     if (!dbExists(dbPath)) {
         std::ofstream file(dbPath);
-        file << "[]" << std::endl;
+        file << "[]";
     }
 
     Database db(dbPath);

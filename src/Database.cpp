@@ -47,5 +47,5 @@ void Database::seeEntries() {
 
 void Database::resetDatabase() {
     std::ofstream file(_dbPath);
-    file << "[]" << std::endl;
+    file << "[]";
 }
