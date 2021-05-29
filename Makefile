@@ -17,6 +17,3 @@ build/transaction.o: src/Transaction.cpp src/include/Transaction.h
 
 build/database.o: src/Database.cpp src/include/Database.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-clean:
-	del build/*.o build/output.exe
