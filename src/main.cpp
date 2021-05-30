@@ -33,7 +33,7 @@ int main() {
         std::cin >> initialBalance;
         
         json initial = {
-            { "initial", initialBalance }
+            { "balance", initialBalance }   
         };
 
         std::ifstream dbFile(dbPath);
@@ -66,6 +66,9 @@ int main() {
     switch (choice) {
         case 1: {
             do {
+                memset(inputType, 0, strlen(inputType));
+                memset(upperInputType, 0, strlen(upperInputType));
+
                 std::cout << "What is the type of this transaction? (ADD/REMOVE)\n";
                 std::cin.ignore(INT_MAX, '\n');
                 std::cin.get(inputType, 6);
@@ -80,7 +83,7 @@ int main() {
             std::cout << "What is the amount of this transaction?\n";
             std::cin >> inputAmount;
 
-            Transaction t(date, upperInputType, inputReason, inputAmount);
+            Transaction t(dbPath, date, upperInputType, inputReason, inputAmount);
 
             db.addEntry(t);
             break;

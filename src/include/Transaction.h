@@ -4,13 +4,14 @@
 #include <iostream>
 
 class Transaction {
+    std::string _dbPath;
     std::string _date;
     std::string _type;
     std::string _reason;
     int _amount;
 
     public:
-        Transaction(std::string, std::string, std::string, int);
+        Transaction(std::string, std::string, std::string, std::string, int);
         std::string getDate();
         std::string getType();
         std::string getReason();

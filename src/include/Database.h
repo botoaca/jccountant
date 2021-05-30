@@ -9,6 +9,7 @@ class Database {
 
     public:
         Database(std::string);
+        std::string getDbPath();
         void addEntry(Transaction);
         void removeEntry(int);
         void seeEntries();

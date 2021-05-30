@@ -16,7 +16,8 @@ void Database::addEntry(Transaction t) {
         { "date", t.getDate() },
         { "type", t.getType() },
         { "reason", t.getReason() },
-        { "amount", t.getAmount() }
+        { "amount", t.getAmount() },
+        { "balance", t.getBalance() }
     };
 
     std::ifstream inputFile(_dbPath);

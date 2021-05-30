@@ -1,7 +1,12 @@
 #include "include/Transaction.h"
+#include "nlohmann/json.hpp"
 #include <iostream>
+#include <fstream>
 
-Transaction::Transaction(std::string date, std::string type, std::string reason, int amount) {
+using json = nlohmann::json;
+
+Transaction::Transaction(std::string dbPath, std::string date, std::string type, std::string reason, int amount) {
+    _dbPath = dbPath;
     _date = date;
     _type = type;
     _reason = reason;
@@ -25,5 +30,13 @@ int Transaction::getAmount() {
 }
 
 int Transaction::getBalance() {
-    
+    std::ifstream dbFile(_dbPath);
+    json arr = json::array();
+    dbFile >> arr;
+    dbFile.close();
+
+    if (_type == "ADD")
+        return (int)arr[arr.size() - 1].at("balance") + _amount;
+    if (_type == "REMOVE")
+        return (int)arr[arr.size() - 1].at("balance") - _amount;
 }
