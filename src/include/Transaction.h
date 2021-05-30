@@ -15,6 +15,7 @@ class Transaction {
         std::string getType();
         std::string getReason();
         int getAmount();
+        int getBalance();
 };
 
 #endif // TRANSACTION_H

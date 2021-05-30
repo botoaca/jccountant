@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
+#include <iomanip>
 #include "nlohmann/json.hpp"
 #include "include/Transaction.h"
 #include "include/Database.h"
@@ -20,8 +21,31 @@ int main() {
     dbPath = &(dbName + ".json")[0];
 
     if (!dbExists(dbPath)) {
-        std::ofstream file(dbPath);
-        file << "[]";
+        // Step 1: Create the file
+        std::ofstream initializeFile(dbPath);
+        initializeFile << "[]";
+        initializeFile.close();
+
+        // Step 2: Generate the JSON array
+        int initialBalance = 0;
+
+        std::cout << "What is your initial balance?\n";
+        std::cin >> initialBalance;
+        
+        json initial = {
+            { "initial", initialBalance }
+        };
+
+        std::ifstream dbFile(dbPath);
+        json result = json::array();
+        dbFile >> result;
+        result.push_back(initial);
+        dbFile.close();
+
+        // Step 3. Write the JSON array
+        std::ofstream file(dbPath, std::ios_base::trunc | std::ios_base::out);
+        file << std::setw(4) << result;
+        file.close();
     }
 
     Database db(dbPath);
@@ -29,7 +53,8 @@ int main() {
     time_t now = time(0);
     std::string date = ctime(&now);
 
-    char inputType[8];
+    char inputType[6];
+    char upperInputType[6];
     char inputReason[80];
     int inputAmount = 0;
 
@@ -39,12 +64,15 @@ int main() {
     std::cin >> choice;
 
     switch (choice) {
-        case 1:
-        {
-            std::cout << "What is the type of this transaction?\n";
-            std::cin.ignore(INT_MAX, '\n');
-            std::cin.get(inputType, 8);
-
+        case 1: {
+            do {
+                std::cout << "What is the type of this transaction? (ADD/REMOVE)\n";
+                std::cin.ignore(INT_MAX, '\n');
+                std::cin.get(inputType, 6);
+                for (unsigned i = 0; i < strlen(inputType); i++)
+                    upperInputType[i] = toupper(inputType[i]);
+            } while (!(strcmp(upperInputType, "ADD") == 0 || strcmp(upperInputType, "REMOVE") == 0));
+            
             std::cout << "What is the reason for this transaction?\n";
             std::cin.ignore(INT_MAX, '\n');
             std::cin.get(inputReason, 80);
@@ -52,17 +80,24 @@ int main() {
             std::cout << "What is the amount of this transaction?\n";
             std::cin >> inputAmount;
 
-            Transaction t(date, inputType, inputReason, inputAmount);
+            Transaction t(date, upperInputType, inputReason, inputAmount);
 
             db.addEntry(t);
             break;
         }
-        case 2:
+        case 2: {
             int idx;
-            std::cout << "Which entry would you like to remove? (Starting from 0)\n";
-            std::cin >> idx;
-            db.removeEntry(idx);
+            std::ifstream inputFile(dbPath);
+            int dbArraySize = json::array().max_size();
+
+            do {
+                std::cout << "Which entry would you like to remove? (Starting from 1)\n";
+                std::cin >> idx;
+                db.removeEntry(idx);
+            } while (idx <= dbArraySize && idx != 0);
+
             break;
+        }
         case 3:
             db.seeEntries();
             break;

@@ -23,3 +23,7 @@ std::string Transaction::getReason() {
 int Transaction::getAmount() {
     return _amount;
 }
+
+int Transaction::getBalance() {
+    
+}

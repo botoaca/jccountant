@@ -46,6 +46,30 @@ void Database::seeEntries() {
 }
 
 void Database::resetDatabase() {
-    std::ofstream file(_dbPath);
-    file << "[]";
+        // Step 1: Create the file
+        std::ofstream initializeFile(_dbPath);
+        initializeFile << "[]";
+        initializeFile.close();
+
+        // Step 2: Generate the JSON array
+        int initialBalance = 0;
+
+        std::cout << "What is your initial balance?\n";
+        std::cin >> initialBalance;
+
+        
+        json initial = {
+            { "initial", initialBalance }
+        };
+
+        std::ifstream dbFile(_dbPath);
+        json result = json::array();
+        dbFile >> result;
+        result.push_back(initial);
+        dbFile.close();
+
+        // Step 3. Write the JSON array
+        std::ofstream file(_dbPath, std::ios_base::trunc | std::ios_base::out);
+        file << std::setw(4) << result;
+        file.close();
 }
