@@ -66,19 +66,19 @@ int main() {
     switch (choice) {
         case 1: {
             do {
-                memset(inputType, 0, strlen(inputType));
-                memset(upperInputType, 0, strlen(upperInputType));
+                memset(inputType, 0, sizeof(inputType));
+                memset(upperInputType, 0, sizeof(upperInputType));
 
                 std::cout << "What is the type of this transaction? (ADD/REMOVE)\n";
                 std::cin.ignore(INT_MAX, '\n');
-                std::cin.get(inputType, 6);
+                std::cin.get(inputType, sizeof(inputType));
                 for (unsigned i = 0; i < strlen(inputType); i++)
                     upperInputType[i] = toupper(inputType[i]);
             } while (!(strcmp(upperInputType, "ADD") == 0 || strcmp(upperInputType, "REMOVE") == 0));
             
             std::cout << "What is the reason for this transaction?\n";
             std::cin.ignore(INT_MAX, '\n');
-            std::cin.get(inputReason, 80);
+            std::cin.get(inputReason, sizeof(inputReason));
 
             std::cout << "What is the amount of this transaction?\n";
             std::cin >> inputAmount;
