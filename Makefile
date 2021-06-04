@@ -9,7 +9,7 @@ build:
 build/output: build/main.o build/transaction.o build/database.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-build/main.o: src/main.cpp
+build/main.o: src/main.cpp src/nlohmann/json.hpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 build/transaction.o: src/Transaction.cpp src/include/Transaction.h

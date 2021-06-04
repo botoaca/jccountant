@@ -39,4 +39,6 @@ int Transaction::getBalance() {
         return (int)arr[arr.size() - 1].at("balance") + _amount;
     if (_type == "REMOVE")
         return (int)arr[arr.size() - 1].at("balance") - _amount;
+    
+    return 0;
 }
